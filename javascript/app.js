@@ -1,3 +1,4 @@
+//peter shim
 var canvas;
 var ctx;
 var dx = 5;
