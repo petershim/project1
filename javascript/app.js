@@ -2,20 +2,22 @@ var JS_SNAKE = {};
 
 JS_SNAKE.game = (function () {
   var ctx;
-  JS_SNAKE.width = 200;
-  JS_SNAKE.height = 200;
-  JS_SNAKE.blockSize = 10;
-  var frameLength = 500; //new frame every 0.5 seconds
+  JS_SNAKE.width = 500;
+  JS_SNAKE.height = 500;
+  JS_SNAKE.blockSize = 20;
+  var frameLength = 100; //new frame every 0.1 seconds
   var snake;
+  var apple;
 
   function init() {
-    $('body').append('<canvas id="jsSnake">');
+    $('body').append('<canvas id="jsSnake" style="border:1px solid #000000;">');
     var $canvas = $('#jsSnake');
     $canvas.attr('width', JS_SNAKE.width);
     $canvas.attr('height', JS_SNAKE.height);
     var canvas = $canvas[0];
     ctx = canvas.getContext('2d');
     snake = JS_SNAKE.snake();
+    apple = JS_SNAKE.apple();
     bindEvents();
     gameLoop();
   }
@@ -24,7 +26,8 @@ JS_SNAKE.game = (function () {
     ctx.clearRect(0, 0, JS_SNAKE.width, JS_SNAKE.height);
     snake.advance();
     snake.draw(ctx);
-    setTimeout(gameLoop, frameLength); //do it all again
+    apple.draw(ctx);
+    setTimeout(gameLoop, frameLength); //Refresh screen
   }
 
   function bindEvents() {
@@ -53,6 +56,23 @@ JS_SNAKE.game = (function () {
     init: init
   };
 })();
+
+JS_SNAKE.apple = function () {
+  var position = [6, 6];
+
+  function draw(ctx) {
+    ctx.save();
+    ctx.fillStyle = '#FF0066'; //apple green
+    var x = position[0] * JS_SNAKE.blockSize;
+    var y = position[1] * JS_SNAKE.blockSize;
+    ctx.fillRect(x, y, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
+    ctx.restore();
+  }
+
+  return {
+    draw: draw
+  };
+};
 
 
 JS_SNAKE.snake = function () {
@@ -93,13 +113,13 @@ JS_SNAKE.snake = function () {
 
   function draw(ctx) {
     ctx.save();
-    ctx.fillStyle = '#33a';
+    ctx.fillStyle = '#33FF99';
     for(var i = 0; i < posArray.length; i++) {
       drawSection(ctx, posArray[i]);
     }
     ctx.restore();
   }
-
+  //continuous movement
   function advance() {
     var nextPosition = posArray[0].slice();
     direction = nextDirection;
