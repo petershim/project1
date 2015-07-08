@@ -5,13 +5,13 @@ JS_SNAKE.game = (function () {
   JS_SNAKE.width = 500;
   JS_SNAKE.height = 500;
   JS_SNAKE.blockSize = 20;
-  var frameLength = 100; //new frame every 0.1 seconds
+  var frameLength = 500; //new frame every 0.1 seconds
   var snake;
   var snake2;
   var apple;
   var initApple;
-  var x;
-  var y;
+  var appleX;
+  var appleY;
 
   function init() {
     $('body').append('<canvas id="jsSnake" style="border:1px solid #000000;">');
@@ -42,10 +42,10 @@ JS_SNAKE.game = (function () {
 
   function bindSnakeEvents() {
     var keysToDirections = {
-      37: 'left',
-      38: 'up',
-      39: 'right',
-      40: 'down',
+      65: 'left',
+      87: 'up',
+      68: 'right',
+      83: 'down',
     };
 
     $(document).keydown(function (event) {
@@ -63,10 +63,10 @@ JS_SNAKE.game = (function () {
   }
   function bindSnake2Events() {
     var keysToDirections = {
-      65: 'left',
-      87: 'up',
-      68: 'right',
-      83: 'down',
+      37: 'left',
+      38: 'up',
+      39: 'right',
+      40: 'down'
     };
 
     $(document).keydown(function (event) {
@@ -92,10 +92,10 @@ JS_SNAKE.apple = function () {
 
   function draw(ctx) {
     ctx.save();
-    ctx.fillStyle = '#FF0066'; //apple green
-    ctx.fillRect(x, y, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
+    ctx.fillStyle = '#FFFF33';
+    ctx.fillRect(appleX, appleY, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
     ctx.restore();
-    console.log(x, y);
+    // console.log(x, y);
   }
 
   return {
@@ -107,12 +107,12 @@ JS_SNAKE.initApple = function () {
 
   function draw(ctx) {
     ctx.save();
-    ctx.fillStyle = '#FF0066'; //apple green
-    x = Math.floor(Math.random()*JS_SNAKE.width);
-    y = Math.floor(Math.random()*JS_SNAKE.height);
-    ctx.fillRect(x, y, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
+    ctx.fillStyle = '#FFFF33';
+    appleX = Math.floor(Math.random()*24)*20;
+    appleY = Math.floor(Math.random()*24)*20;
+    ctx.fillRect(appleX, appleY, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
     ctx.restore();
-    console.log(x, y);
+    console.log(appleX, appleY);
   }
 
   return {
@@ -123,9 +123,9 @@ JS_SNAKE.initApple = function () {
 
 JS_SNAKE.snake = function () {
   var posArray = [];
-  posArray.push([6, 4]);
-  posArray.push([5, 4]);
-  posArray.push([4, 4]);
+  posArray.push([3, 1]);
+  posArray.push([2, 1]);
+  posArray.push([1, 1]);
   var direction = 'right';
   var nextDirection = direction;
 
@@ -155,12 +155,14 @@ JS_SNAKE.snake = function () {
     var x = JS_SNAKE.blockSize * position[0];
     var y = JS_SNAKE.blockSize * position[1];
     ctx.fillRect(x, y, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
+    console.log(x, y);
   }
 
   function draw(ctx) {
     ctx.save();
     ctx.fillStyle = '#33FF99';
     for(var i = 0; i < posArray.length; i++) {
+      collisionTest(ctx, posArray[i]);
       drawSection(ctx, posArray[i]);
     }
     ctx.restore();
@@ -190,6 +192,17 @@ JS_SNAKE.snake = function () {
     posArray.pop();
   }
 
+  function collisionTest(ctx, position) {
+    var x = JS_SNAKE.blockSize * position[0];
+    var y = JS_SNAKE.blockSize * position[1];
+    if(x >= 500 || x <= 0) {
+      console.log('Snake1 wall check!');
+    }else if (y >= 500 || y <= 0) {
+      console.log('Snake1 wall check!');
+    }else if (x === appleX && y === appleY) {
+      console.log('Snake1 got apple!');
+    }
+  }
 
   return {
     draw: draw,
@@ -200,9 +213,9 @@ JS_SNAKE.snake = function () {
 
 JS_SNAKE.snake2 = function () {
   var posArray = [];
-  posArray.push([6, 4]);
-  posArray.push([5, 4]);
-  posArray.push([4, 4]);
+  posArray.push([21, 23]);
+  posArray.push([22, 23]);
+  posArray.push([23, 23]);
   var direction = 'left';
   var nextDirection = direction;
 
@@ -231,13 +244,15 @@ JS_SNAKE.snake2 = function () {
   function drawSection(ctx, position) {
     var x = JS_SNAKE.blockSize * position[0];
     var y = JS_SNAKE.blockSize * position[1];
+    // console.log("2nd snake " + x, y);
     ctx.fillRect(x, y, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
   }
 
   function draw(ctx) {
     ctx.save();
-    ctx.fillStyle = '#66FFCC';
+    ctx.fillStyle = '#FF0066';
     for(var i = 0; i < posArray.length; i++) {
+      collisionTest(ctx, posArray[i]);
       drawSection(ctx, posArray[i]);
     }
     ctx.restore();
@@ -265,6 +280,18 @@ JS_SNAKE.snake2 = function () {
 
     posArray.unshift(nextPosition);
     posArray.pop();
+  }
+
+  function collisionTest(ctx, position) {
+    var x = JS_SNAKE.blockSize * position[0];
+    var y = JS_SNAKE.blockSize * position[1];
+    if(x >= 500 || x <= 0) {
+      console.log('Snake2 wall check!');
+    }else if (y >= 500 || y <= 0) {
+      console.log('Snake2 wall check!');
+    }else if (x === appleX && y === appleY) {
+      console.log('Snake2 got apple!');
+    }
   }
 
 
