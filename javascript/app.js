@@ -1,6 +1,8 @@
 var JS_SNAKE = {};
 var player1Score = 0;
 var player2Score = 0;
+var appleX = 240;
+var appleY = 240;
 
 JS_SNAKE.game = (function () {
   var ctx;
@@ -12,8 +14,6 @@ JS_SNAKE.game = (function () {
   var snake2;
   var apple;
   var initApple;
-  var appleX;
-  var appleY;
 //INITIALIZES THE GAME
   function init() {
     $('body').append('<canvas id="jsSnake" style="border:1px solid #000000;">');
@@ -111,8 +111,6 @@ JS_SNAKE.initApple = function () {
   function draw(ctx) {
     ctx.save();
     ctx.fillStyle = '#FFFF33';
-    appleX = Math.floor(Math.random()*24)*20;
-    appleY = Math.floor(Math.random()*24)*20;
     ctx.fillRect(appleX, appleY, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
     ctx.restore();
     console.log(appleX, appleY);
@@ -209,6 +207,8 @@ JS_SNAKE.snake = function () {
       console.log(self.posArray);
       player1Score+=1;
       console.log(player1Score);
+      appleX = Math.floor(Math.random()*24)*20;
+      appleY = Math.floor(Math.random()*24)*20;
     }
   }
 
@@ -302,6 +302,8 @@ JS_SNAKE.snake2 = function () {
       console.log(self.posArray);
       player2Score+=1;
       console.log(player2Score);
+      appleX = Math.floor(Math.random()*24)*20;
+      appleY = Math.floor(Math.random()*24)*20;
     }
   }
 
