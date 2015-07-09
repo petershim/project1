@@ -12,7 +12,7 @@ JS_SNAKE.game = (function () {
   var initApple;
   var appleX;
   var appleY;
-
+//INITIALIZES THE GAME
   function init() {
     $('body').append('<canvas id="jsSnake" style="border:1px solid #000000;">');
     var $canvas = $('#jsSnake');
@@ -39,7 +39,7 @@ JS_SNAKE.game = (function () {
     apple.draw(ctx);
     setTimeout(gameLoop, frameLength); //Refresh screen
   }
-
+//SNAKE 1 (GREEN)
   function bindSnakeEvents() {
     var keysToDirections = {
       65: 'left',
@@ -61,6 +61,7 @@ JS_SNAKE.game = (function () {
       }
     });
   }
+//SNAKE 2 (RED)
   function bindSnake2Events() {
     var keysToDirections = {
       37: 'left',
@@ -87,7 +88,7 @@ JS_SNAKE.game = (function () {
     init: init
   };
 })();
-
+//APPLE OBJECT
 JS_SNAKE.apple = function () {
 
   function draw(ctx) {
@@ -120,12 +121,13 @@ JS_SNAKE.initApple = function () {
   };
 };
 
-
+//SNAKE 1 ()
 JS_SNAKE.snake = function () {
-  var posArray = [];
-  posArray.push([3, 1]);
-  posArray.push([2, 1]);
-  posArray.push([1, 1]);
+  var self = this;
+  self.posArray = [];
+  self.posArray.push([3, 1]);
+  self.posArray.push([2, 1]);
+  self.posArray.push([1, 1]);
   var direction = 'right';
   var nextDirection = direction;
 
@@ -161,15 +163,16 @@ JS_SNAKE.snake = function () {
   function draw(ctx) {
     ctx.save();
     ctx.fillStyle = '#33FF99';
-    for(var i = 0; i < posArray.length; i++) {
-      collisionTest(ctx, posArray[i]);
-      drawSection(ctx, posArray[i]);
+    collisionTest(ctx, self.posArray[0]);
+
+    for(var i = 0; i < self.posArray.length; i++) {
+      drawSection(ctx, self.posArray[i]);
     }
     ctx.restore();
   }
   //continuous movement
   function advance() {
-    var nextPosition = posArray[0].slice();
+    var nextPosition = self.posArray[0].slice();
     direction = nextDirection;
     switch (direction) {
     case 'left':
@@ -188,18 +191,19 @@ JS_SNAKE.snake = function () {
       throw('Invalid direction');
     }
 
-    posArray.unshift(nextPosition);
-    posArray.pop();
+    self.posArray.unshift(nextPosition);
+    self.posArray.pop();
   }
 
   function collisionTest(ctx, position) {
     var x = JS_SNAKE.blockSize * position[0];
     var y = JS_SNAKE.blockSize * position[1];
-    if(x >= 500 || x <= 0) {
+    if(x > 500 || x < 0) {
       console.log('Snake1 wall check!');
-    }else if (y >= 500 || y <= 0) {
+    }else if (y > 500 || y < 0) {
       console.log('Snake1 wall check!');
     }else if (x === appleX && y === appleY) {
+      self.posArray.push([99, 1]);
       console.log('Snake1 got apple!');
     }
   }
