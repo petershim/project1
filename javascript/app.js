@@ -1,4 +1,6 @@
 var JS_SNAKE = {};
+var player1Score = 0;
+var player2Score = 0;
 
 JS_SNAKE.game = (function () {
   var ctx;
@@ -157,7 +159,7 @@ JS_SNAKE.snake = function () {
     var x = JS_SNAKE.blockSize * position[0];
     var y = JS_SNAKE.blockSize * position[1];
     ctx.fillRect(x, y, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
-    console.log(x, y);
+    // console.log(x, y);
   }
 
   function draw(ctx) {
@@ -204,7 +206,9 @@ JS_SNAKE.snake = function () {
       console.log('Snake1 wall check!');
     }else if (x === appleX && y === appleY) {
       self.posArray.push([99, 1]);
-      console.log('Snake1 got apple!');
+      console.log(self.posArray);
+      player1Score+=1;
+      console.log(player1Score);
     }
   }
 
@@ -216,10 +220,10 @@ JS_SNAKE.snake = function () {
 };
 
 JS_SNAKE.snake2 = function () {
-  var posArray = [];
-  posArray.push([21, 23]);
-  posArray.push([22, 23]);
-  posArray.push([23, 23]);
+  self.posArray = [];
+  self.posArray.push([21, 23]);
+  self.posArray.push([22, 23]);
+  self.posArray.push([23, 23]);
   var direction = 'left';
   var nextDirection = direction;
 
@@ -255,15 +259,15 @@ JS_SNAKE.snake2 = function () {
   function draw(ctx) {
     ctx.save();
     ctx.fillStyle = '#FF0066';
-    for(var i = 0; i < posArray.length; i++) {
-      collisionTest(ctx, posArray[i]);
-      drawSection(ctx, posArray[i]);
+    collisionTest(ctx, self.posArray[0]);
+    for(var i = 0; i < self.posArray.length; i++) {
+      drawSection(ctx, self.posArray[i]);
     }
     ctx.restore();
   }
   //continuous movement
   function advance() {
-    var nextPosition = posArray[0].slice();
+    var nextPosition = self.posArray[0].slice();
     direction = nextDirection;
     switch (direction) {
     case 'left':
@@ -282,8 +286,8 @@ JS_SNAKE.snake2 = function () {
       throw('Invalid direction');
     }
 
-    posArray.unshift(nextPosition);
-    posArray.pop();
+    self.posArray.unshift(nextPosition);
+    self.posArray.pop();
   }
 
   function collisionTest(ctx, position) {
@@ -294,7 +298,10 @@ JS_SNAKE.snake2 = function () {
     }else if (y >= 500 || y <= 0) {
       console.log('Snake2 wall check!');
     }else if (x === appleX && y === appleY) {
-      console.log('Snake2 got apple!');
+      self.posArray.push([98, 1]);
+      console.log(self.posArray);
+      player2Score+=1;
+      console.log(player2Score);
     }
   }
 
