@@ -1,0 +1,49 @@
+body {
+  font-family: 'Play', sans-serif;
+}
+
+header {
+  /*display:inline;*/
+  font-size: 55px;
+  margin: 0 auto;
+}
+
+#p1 {
+  color: #33FF99;
+  display: inline;
+}
+
+#p2 {
+  color: #FF0066;
+  display: inline;
+}
+
+#p1score {
+  color: #33FF99;
+  display: inline;
+}
+
+#p2score {
+  color: #FF0066;
+  display: inline;
+}
+
+#jsSnake {
+  display: block;
+}
+
+#winner2 {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  display: block;
+  color: #FF0066;
+}
+
+#winner1 {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  display: block;
+  color: #33FF99;
+}
