@@ -203,8 +203,18 @@ JS_SNAKE.snake = function () {
     var y = JS_SNAKE.blockSize * position[1];
     if(x > 500 || x < 0) {
       console.log('Snake1 wall check!');
+      direction = null;
+      nextDirection = null;
+      self.posArray.shift(advance.nextPosition);
+      ctx.clearRect(0, 0, 500, 500);
+      $('#winner2').append('PLAYER 2 WINS<br>');
     }else if (y > 500 || y < 0) {
+      direction = null;
+      nextDirection = null;
       console.log('Snake1 wall check!');
+      self.posArray.shift(advance.nextPosition);
+      ctx.clearRect(0, 0, 500, 500);
+      $('#winner2').append('PLAYER 2 WINS<br>');
     }else if (x === appleX && y === appleY) {
       self.posArray.push([99, 1]);
       console.log(self.posArray);
@@ -301,9 +311,19 @@ JS_SNAKE.snake2 = function () {
     var x = JS_SNAKE.blockSize * position[0];
     var y = JS_SNAKE.blockSize * position[1];
     if(x >= 500 || x <= 0) {
+      direction = null;
+      nextDirection = null;
       console.log('Snake2 wall check!');
+      self.posArray.shift(advance.nextPosition);
+      ctx.clearRect(0, 0, 500, 500);
+      $('#winner1').append('PLAYER 1 WINS<br>');
     }else if (y >= 500 || y <= 0) {
+      direction = null;
+      nextDirection = null;
       console.log('Snake2 wall check!');
+      self.posArray.shift(advance.nextPosition);
+      ctx.clearRect(0, 0, 500, 500);
+      $('#winner1').append('PLAYER 1 WINS<br>');
     }else if (x === appleX && y === appleY) {
       self.posArray.push([98, 1]);
       console.log(self.posArray);

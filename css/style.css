@@ -1,7 +1,10 @@
-header {
+body {
   font-family: 'Play', sans-serif;
-  display:inline;
-  font-size: 60px;
+}
+
+header {
+  /*display:inline;*/
+  font-size: 55px;
   margin: 0 auto;
 }
 
@@ -18,17 +21,29 @@ header {
 #p1score {
   color: #33FF99;
   display: inline;
-  width: 100px;
-  height: 100px;
 }
 
 #p2score {
   color: #FF0066;
   display: inline;
-  width: 100px;
-  height: 100px;
 }
 
 #jsSnake {
   display: block;
+}
+
+#winner2 {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  display: block;
+  color: #FF0066;
+}
+
+#winner1 {
+  position: absolute;
+  top: 200px;
+  left: 200px;
+  display: block;
+  color: #33FF99;
 }
