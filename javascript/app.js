@@ -3,20 +3,23 @@ var player1Score = 0;
 var player2Score = 0;
 var appleX = 240;
 var appleY = 240;
+var hexCode = ['#8ffff6', '#ff5050','#99ff00', '#9900CC', '#CC00ff', '#FFFF00', '#99FF99', '#99FFCC', '#FFCC99'];
+var i = 0;
+var speed = 500;
 
 JS_SNAKE.game = (function () {
   var ctx;
   JS_SNAKE.width = 500;
   JS_SNAKE.height = 500;
   JS_SNAKE.blockSize = 20;
-  var frameLength = 500; //new frame every 0.1 seconds
+  var frameLength = speed; //new frame every 0.1 seconds
   var snake;
   var snake2;
   var apple;
   var initApple;
 //INITIALIZES THE GAME
   function init() {
-    $('body').append('<canvas id="jsSnake" style="border:1px solid #000000;">');
+    $('body').append('<canvas id="jsSnake" style="border:10px solid #8FFFF6;">');
     var $canvas = $('#jsSnake');
     $canvas.attr('width', JS_SNAKE.width);
     $canvas.attr('height', JS_SNAKE.height);
@@ -39,7 +42,7 @@ JS_SNAKE.game = (function () {
     snake.draw(ctx);
     snake2.draw(ctx);
     apple.draw(ctx);
-    setTimeout(gameLoop, frameLength); //Refresh screen
+    setTimeout(gameLoop, speed); //Refresh screen
   }
 //SNAKE 1 (GREEN)
   function bindSnakeEvents() {
@@ -95,7 +98,7 @@ JS_SNAKE.apple = function () {
 
   function draw(ctx) {
     ctx.save();
-    ctx.fillStyle = '#FFFF33';
+    ctx.fillStyle = hexCode[i];
     ctx.fillRect(appleX, appleY, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
     ctx.restore();
     // console.log(x, y);
@@ -110,7 +113,7 @@ JS_SNAKE.initApple = function () {
 
   function draw(ctx) {
     ctx.save();
-    ctx.fillStyle = '#FFFF33';
+    ctx.fillStyle = hexCode[i];
     ctx.fillRect(appleX, appleY, JS_SNAKE.blockSize, JS_SNAKE.blockSize);
     ctx.restore();
     console.log(appleX, appleY);
@@ -209,6 +212,10 @@ JS_SNAKE.snake = function () {
       console.log(player1Score);
       appleX = Math.floor(Math.random()*24)*20;
       appleY = Math.floor(Math.random()*24)*20;
+      i = Math.floor(Math.random()*hexCode.length)-1;
+      speed -= 10;
+      $('#p1score').text(player1Score);
+      console.log(speed);
     }
   }
 
@@ -304,6 +311,10 @@ JS_SNAKE.snake2 = function () {
       console.log(player2Score);
       appleX = Math.floor(Math.random()*24)*20;
       appleY = Math.floor(Math.random()*24)*20;
+      i = Math.floor(Math.random()*hexCode.length)-1;
+      speed -= 10;
+      console.log(speed);
+      $('#p2score').text(player2Score);
     }
   }
 
